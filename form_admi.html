@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración de Empresas y Vacantes</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+        input[type="file"] {
+            margin-top: 5px;
+        }
+        input[type="submit"],
+        .btn-remove,
+        .btn-add {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            float: right;
+        }
+        .btn-remove {
+            background-color: #dc3545;
+            color: white;
+            margin-left: 10px;
+        }
+        .btn-add {
+            background-color: #28a745;
+            color: white;
+            margin-top: 10px;
+        }
+        h2 {
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .vacante-item {
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        .requisito-item {
+            display: flex;
+            align-items: center;
+        }
+        .requisito-item textarea {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Administración de Empresas y Vacantes</h2>
+
+    <form action="guardar_empresa_vacantes.php" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="nombre_empresa">Nombre de la Empresa:</label>
+            <input type="text" id="nombre_empresa" name="nombre_empresa" required>
+        </div>
+
+        <div class="form-group">
+            <label for="descripcion_empresa">Descripción de la Empresa:</label>
+            <textarea id="descripcion_empresa" name="descripcion_empresa" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="logo_empresa">Logo de la Empresa:</label>
+            <input type="file" id="logo_empresa" name="logo_empresa">
+        </div>
+
+        <div class="form-group">
+            <label for="servicios_empresa">Servicios de la Empresa:</label>
+            <textarea id="servicios_empresa" name="servicios_empresa" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="ubicacion_empresa">Ubicación de la Empresa:</label>
+            <input type="text" id="ubicacion_empresa" name="ubicacion_empresa">
+        </div>
+
+        <div class="form-group">
+            <label for="otros_detalles">Otros Detalles:</label>
+            <textarea id="otros_detalles" name="otros_detalles" rows="4"></textarea>
+        </div>
+
+        <hr>
+        <h2>Vacantes Disponibles</h2>
+
+        <div id="vacantes-container">
+            <div class="vacante-item">
+                <div class="form-group">
+                    <label for="vacante1">Vacante 1:</label>
+                    <input type="text" id="vacante1" name="vacantes[]" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion_vacante1">Descripción de la Vacante 1:</label>
+                    <textarea id="descripcion_vacante1" name="descripciones_vacantes[]" rows="4"></textarea>
+                </div>
+
+                <div class="form-group requisitos-container">
+                    <label>Requisitos para Vacante 1:</label>
+                    <div class="requisito-item">
+                        <textarea name="requisitos_vacantes[0][]" rows="2"></textarea>
+                        <button type="button" class="btn-remove" onclick="eliminarRequisito(this)">Eliminar</button>
+                    </div>
+                </div>
+                <button type="button" class="btn-add" onclick="agregarRequisito(this)">Agregar Requisito</button>
+                <button type="button" class="btn-remove" onclick="eliminarVacante(this)">Eliminar Vacante</button>
+            </div>
+        </div>
+
+        <button type="button" class="btn-add" onclick="agregarVacante()">Agregar Vacante</button>
+
+        <input type="submit" value="Guardar">
+    </form>
+
+    <script>
+        let vacanteCount = 1;
+
+        function agregarVacante() {
+            vacanteCount++;
+            let vacanteHTML = `
+                <div class="vacante-item">
+                    <div class="form-group">
+                        <label for="vacante${vacanteCount}">Vacante ${vacanteCount}:</label>
+                        <input type="text" id="vacante${vacanteCount}" name="vacantes[]">
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="descripcion_vacante${vacanteCount}">Descripción de la Vacante ${vacanteCount}:</label>
+                        <textarea id="descripcion_vacante${vacanteCount}" name="descripciones_vacantes[]" rows="4"></textarea>
+                    </div>
+
+                    <div class="form-group requisitos-container">
+                        <label>Requisitos para Vacante ${vacanteCount}:</label>
+                        <div class="requisito-item">
+                            <textarea name="requisitos_vacantes[${vacanteCount - 1}][]" rows="2"></textarea>
+                            <button type="button" class="btn-remove" onclick="eliminarRequisito(this)">Eliminar</button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-add" onclick="agregarRequisito(this)">Agregar Requisito</button>
+                    <button type="button" class="btn-remove" onclick="eliminarVacante(this)">Eliminar Vacante</button>
+                </div>
+            `;
+            document.getElementById('vacantes-container').innerHTML += vacanteHTML;
+        }
+
+        function agregarRequisito(btn) {
+            let requisitosContainer = btn.previousElementSibling;
+            let requisitoHTML = `
+                <div class="requisito-item">
+                    <textarea name="${requisitosContainer.getElementsByTagName('textarea')[0].name}" rows="2"></textarea>
+                    <button type="button" class="btn-remove" onclick="eliminarRequisito(this)">Eliminar</button>
+                </div>
+            `;
+            requisitosContainer.innerHTML += requisitoHTML;
+        }
+
+        function eliminarVacante(btn) {
+            btn.parentNode.remove();
+        }
+
+        function eliminarRequisito(btn) {
+            btn.parentNode.remove();
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

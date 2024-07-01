@@ -1,0 +1,29 @@
+/*Agregar fondo, margen y color de texto*/
+body{
+    color: aliceblue;
+    background-image: url("../img/fondo_rq.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-top: 2.5%;
+}
+/*Dar espacio al logo y centrar, en pantalla grande */
+img{
+    padding-left: 41% !important;   
+}
+/*Centrar texto y dar margen*/
+h2, h5{
+    text-align: center;
+    margin-top: 3%;
+}
+ul{
+    padding-inline-start: 25%;
+}
+/*Centrar texto y logo en pantalla pequeña*/
+@media (max-width: 768px) {
+    ul {
+        padding-inline-start: 10% !important;
+      } 
+    img {
+      padding-inline-start: 24.6% !important;
+    } 
+}

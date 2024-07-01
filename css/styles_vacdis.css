@@ -1,0 +1,13 @@
+h1 {
+    font-family: "Permanent Marker", cursive;
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+.btn{
+    display: inline-block;
+    color: rgb(229, 240, 234);
+    text-decoration: none;
+    font-weight: 700;
+    border: 1;
+}

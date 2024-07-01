@@ -1,0 +1,35 @@
+/*Agregar fondo, posición y margen*/
+body {
+    background-color: #303131;
+    background-image: url("../img/contact.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-top: 2.5%;
+}
+
+.form-group{
+    margin-top: 2.5%;
+}
+/*Color de los textos*/
+.text{
+    color: #fff; 
+}
+
+.form-control{
+    opacity: 1.5;
+}
+
+/*Dar margen al boton*/
+.btn {
+    margin: 1.5%;
+}
+
+img{
+    padding-left: 38.5% !important;
+    margin: 2%;   
+}
+@media (max-width: 768px) {
+    img {
+      padding-inline-start: 21% !important;
+    } 
+}

@@ -1,0 +1,39 @@
+body{
+    background-image: url("../img/fond_vd.jpg");
+    background-repeat: no-repeat !important;
+    background-position:  center;
+    margin-top: 2.5% !important;  
+}
+h1{
+    color: rgb(7, 7, 7);
+    text-align: center;
+}
+.card{
+    max-width: 550px;
+    opacity: 80%;
+    margin: 1%;
+}
+.col{
+    margin: 5px auto 0px auto !important; 
+}
+img{
+    padding-left: 18%;  
+}
+
+.table{
+    cursor: pointer;
+    max-width: 95% !important;
+    margin: 50px auto 0px auto !important; 
+    opacity: 80%;
+}
+@media (min-width: 50%) {
+    .card{
+        max-width: 540px;
+    }
+    .col{
+        margin: 25px auto 0px auto !important;
+    }
+    .img{
+        padding-left: 18%;
+    }
+}
